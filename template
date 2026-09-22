@@ -1,0 +1,1131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>love.notezunfiltered — Template Showcase</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg: #070710;
+  --surface: #0e0d1c;
+  --border: #ffffff0c;
+  --text: #f0eeff;
+  --muted: #6b6888;
+  --pink: #ffb7d5;
+  --purple: #a855f7;
+  --gold: #f59e0b;
+  --teal: #2dd4bf;
+  --red: #fb7185;
+  --blue: #60a5fa;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  min-height: 100vh;
+  padding: 0 0 80px;
+}
+
+/* ── HERO ── */
+.hero {
+  text-align: center;
+  padding: 60px 24px 48px;
+  border-bottom: 1px solid var(--border);
+}
+
+.hero-label {
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  color: var(--muted);
+  margin-bottom: 14px;
+}
+
+.hero-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(28px, 4vw, 44px);
+  font-style: italic;
+  font-weight: 400;
+  color: var(--text);
+  margin-bottom: 10px;
+}
+
+.hero-sub {
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+/* ── SECTION ── */
+.section {
+  padding: 56px 24px 0;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.section-head {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  font-style: italic;
+  color: var(--text);
+}
+
+.section-note {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+/* ── GRID ── */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+/* ── TEMPLATE CARD ── */
+.tcard {
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  transition: border-color 0.25s, transform 0.2s;
+  position: relative;
+}
+
+.tcard:hover { border-color: #ffffff22; transform: translateY(-3px); }
+
+.tcard.selected { border-color: var(--purple) !important; box-shadow: 0 0 0 1px var(--purple); }
+
+/* PREVIEW BOX */
+.preview {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+/* CARD META */
+.cmeta {
+  padding: 14px 16px;
+  background: var(--surface);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+}
+
+.cmeta-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.cname {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text);
+}
+
+.ctag {
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  padding: 3px 9px;
+  border-radius: 20px;
+  font-weight: 500;
+}
+
+.cdesc { font-size: 11px; color: var(--muted); line-height: 1.5; }
+
+.anim-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 10px;
+  color: var(--muted);
+  margin-top: 2px;
+}
+
+.anim-dot { width: 6px; height: 6px; border-radius: 50%; animation: blink 1.4s infinite; }
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.2} }
+
+/* ══════════════════════════════════════════
+   TEMPLATE DESIGNS
+══════════════════════════════════════════ */
+
+/* ── T1: K-DRAMA FADE ── */
+.t-kdrama-fade {
+  background: #10080f;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  width: 100%; height: 100%; padding: 10%;
+  font-family: 'Playfair Display', serif;
+}
+.t-kdrama-fade .bloom { position:absolute;border-radius:50%;filter:blur(50px);opacity:0.2; }
+.t-kdrama-fade .border-f { position:absolute;inset:7%;border:1px solid #ffb7d533; }
+.t-kdrama-fade .corn { position:absolute;border-color:#ffb7d5;border-style:solid; }
+.t-kdrama-fade .corn.tl{top:7%;left:7%;width:8%;height:8%;border-width:1.5px 0 0 1.5px;}
+.t-kdrama-fade .corn.tr{top:7%;right:7%;width:8%;height:8%;border-width:1.5px 1.5px 0 0;}
+.t-kdrama-fade .corn.bl{bottom:7%;left:7%;width:8%;height:8%;border-width:0 0 1.5px 1.5px;}
+.t-kdrama-fade .corn.br{bottom:7%;right:7%;width:8%;height:8%;border-width:0 1.5px 1.5px 0;}
+.t-kdrama-fade .line { font-size:5.5%; color:#fdf2f8; line-height:1.7; text-align:center; font-style:italic; position:relative; opacity:0; }
+.t-kdrama-fade .line em { color:#ffb7d5; font-style:normal; }
+.t-kdrama-fade .handle { font-family:'DM Sans',sans-serif;font-size:2%;letter-spacing:0.3em;color:#ffb7d555;position:relative;opacity:0; }
+.t-kdrama-fade.go .line:nth-child(1){animation:fadeUp 0.7s 0.3s forwards;}
+.t-kdrama-fade.go .line:nth-child(2){animation:fadeUp 0.7s 1s forwards;}
+.t-kdrama-fade.go .line:nth-child(3){animation:fadeUp 0.7s 1.7s forwards;}
+.t-kdrama-fade.go .handle{animation:fadeUp 0.6s 2.6s forwards;}
+@keyframes fadeUp{to{opacity:1;transform:translateY(0);}from{opacity:0;transform:translateY(12px);}}
+
+/* ── T2: K-DRAMA PETALS ── */
+.t-kdrama-petals {
+  background: #0d0512;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  width: 100%; height: 100%; padding: 10%;
+  font-family: 'Playfair Display', serif;
+  overflow: hidden;
+}
+.t-kdrama-petals .petal {
+  position:absolute; border-radius:50% 10% 50% 10%;
+  background:#ffb7d5; opacity:0;
+}
+.t-kdrama-petals.go .petal { animation: petalFall var(--dur,3s) var(--del,0s) infinite linear; }
+@keyframes petalFall {
+  0%{opacity:0;transform:translateY(-10%) rotate(0deg);}
+  10%{opacity:0.5;}
+  90%{opacity:0.3;}
+  100%{opacity:0;transform:translateY(110%) rotate(360deg);}
+}
+.t-kdrama-petals .main {font-size:5%;color:#fdf2f8;line-height:1.8;text-align:center;font-style:italic;position:relative;opacity:0;}
+.t-kdrama-petals .main em{color:#ffb7d5;font-style:normal;}
+.t-kdrama-petals.go .main{animation:revealScale 1s 0.5s forwards;}
+@keyframes revealScale{from{opacity:0;transform:scale(0.92);}to{opacity:1;transform:scale(1);}}
+.t-kdrama-petals .hangul{font-size:7%;color:#ffb7d508;letter-spacing:0.3em;margin-bottom:6%;position:relative;}
+.t-kdrama-petals .handle{font-family:'DM Sans',sans-serif;font-size:2%;letter-spacing:0.3em;color:#ffb7d544;margin-top:6%;position:relative;opacity:0;}
+.t-kdrama-petals.go .handle{animation:fadeUp 0.7s 1.8s forwards;}
+
+/* ── T3: K-DRAMA CINEMATIC ── */
+.t-kdrama-cine {
+  background: #08040c;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  width: 100%; height: 100%; padding: 10%;
+  font-family: 'Playfair Display', serif;
+  overflow: hidden;
+}
+.t-kdrama-cine .glow-cine{position:absolute;border-radius:50%;filter:blur(80px);}
+.t-kdrama-cine .widescreen{position:absolute;left:0;right:0;height:12%;background:#08040c;z-index:2;}
+.t-kdrama-cine .widescreen.top{top:0;} .t-kdrama-cine .widescreen.bot{bottom:0;}
+.t-kdrama-cine .main{font-size:5.5%;color:#fdf2f8;line-height:1.7;text-align:center;font-style:italic;position:relative;z-index:3;opacity:0;}
+.t-kdrama-cine .main em{color:#ffb7d5;font-style:normal;}
+.t-kdrama-cine.go .glow-cine{animation:glowPulse 3s infinite alternate;}
+.t-kdrama-cine.go .main{animation:cinemaReveal 1.2s 0.4s forwards;}
+@keyframes glowPulse{from{opacity:0.1;}to{opacity:0.28;}}
+@keyframes cinemaReveal{from{opacity:0;letter-spacing:0.15em;}to{opacity:1;letter-spacing:0.02em;}}
+.t-kdrama-cine .handle{font-family:'DM Sans',sans-serif;font-size:2%;letter-spacing:0.3em;color:#ffb7d544;position:relative;z-index:3;margin-top:8%;opacity:0;}
+.t-kdrama-cine.go .handle{animation:fadeUp 0.6s 2s forwards;}
+
+/* ── T4: LOVE BUBBLE POP ── */
+.t-love-pop {
+  background: #0d0918;
+  display: flex; flex-direction: column; align-items: flex-start; justify-content: center;
+  width: 100%; height: 100%; padding: 10% 9%;
+  overflow: hidden;
+}
+.t-love-pop .lglow{position:absolute;border-radius:50%;filter:blur(70px);}
+.t-love-pop .eyebrow{font-family:'DM Sans',sans-serif;font-size:2%;letter-spacing:0.5em;color:#a855f766;text-transform:uppercase;align-self:center;margin-bottom:6%;position:relative;opacity:0;}
+.t-love-pop.go .eyebrow{animation:fadeUp 0.5s 0.1s forwards;}
+.t-love-pop .br1{background:#1e1030;border:1px solid #a855f733;border-radius:15% 15% 15% 2%;padding:5% 6%;width:90%;margin-bottom:3%;position:relative;opacity:0;}
+.t-love-pop .br1-tag{position:absolute;top:-5%;left:5%;font-family:'DM Sans',sans-serif;font-size:1.4%;background:#a855f7;color:#0d0918;padding:1% 4%;border-radius:3px;letter-spacing:0.2em;text-transform:uppercase;font-weight:600;}
+.t-love-pop .br1-txt{font-family:'DM Sans',sans-serif;font-size:4%;line-height:1.6;color:#e9d5ff;}
+.t-love-pop .br1-txt em{color:#c084fc;font-style:italic;}
+.t-love-pop.go .br1{animation:bubblePop 0.5s 0.5s cubic-bezier(0.175,0.885,0.32,1.275) forwards;}
+.t-love-pop .br2{background:#1a0a24;border:1px solid #ec489988;border-radius:15% 15% 2% 15%;padding:4% 5%;max-width:72%;align-self:flex-end;margin-bottom:6%;position:relative;opacity:0;}
+.t-love-pop .br2-txt{font-family:'DM Sans',sans-serif;font-size:3.8%;line-height:1.6;color:#fbcfe8;font-style:italic;}
+.t-love-pop.go .br2{animation:bubblePop 0.5s 1.2s cubic-bezier(0.175,0.885,0.32,1.275) forwards;}
+@keyframes bubblePop{from{opacity:0;transform:scale(0.7);}to{opacity:1;transform:scale(1);}}
+.t-love-pop .caption{font-family:'Playfair Display',serif;font-size:2.8%;color:#a855f744;font-style:italic;align-self:center;position:relative;opacity:0;}
+.t-love-pop.go .caption{animation:fadeUp 0.5s 2s forwards;}
+.t-love-pop .handle{font-family:'DM Sans',sans-serif;font-size:2%;letter-spacing:0.3em;color:#a855f744;align-self:center;margin-top:3%;position:relative;opacity:0;}
+.t-love-pop.go .handle{animation:fadeUp 0.5s 2.4s forwards;}
+
+/* ── T5: LOVE PARTICLES ── */
+.t-love-particles {
+  background: #0a0614;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  width: 100%; height: 100%; padding: 10%;
+  overflow: hidden;
+}
+.t-love-particles .part{position:absolute;border-radius:50%;opacity:0;}
+.t-love-particles.go .part{animation:floatPart var(--dur,4s) var(--del,0s) infinite ease-in-out;}
+@keyframes floatPart{
+  0%{opacity:0;transform:translateY(5%) scale(0.5);}
+  30%{opacity:0.6;}
+  70%{opacity:0.4;}
+  100%{opacity:0;transform:translateY(-80%) scale(1.2);}
+}
+.t-love-particles .main{font-family:'Cormorant Garamond',serif;font-size:6%;color:#e9d5ff;line-height:1.7;text-align:center;font-style:italic;position:relative;opacity:0;}
+.t-love-particles .main em{color:#c084fc;font-style:normal;}
+.t-love-particles.go .main{animation:revealScale 1s 0.8s forwards;}
+.t-love-particles .handle{font-family:'DM Sans',sans-serif;font-size:2%;letter-spacing:0.3em;color:#a855f744;margin-top:8%;position:relative;opacity:0;}
+.t-love-particles.go .handle{animation:fadeUp 0.6s 2.2s forwards;}
+.t-love-particles .heart{position:absolute;font-size:3%;opacity:0;}
+.t-love-particles.go .heart{animation:heartFloat var(--dur,5s) var(--del,0s) infinite;}
+@keyframes heartFloat{
+  0%{opacity:0;transform:translateY(0) scale(0.5);}
+  20%{opacity:0.5;}
+  80%{opacity:0.2;}
+  100%{opacity:0;transform:translateY(-80%) scale(1.4);}
+}
+
+/* ── T6: LOVE CINEMATIC ── */
+.t-love-cine {
+  background: #060310;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  width: 100%; height: 100%; padding: 10%;
+  overflow: hidden;
+}
+.t-love-cine .glow-l{position:absolute;border-radius:50%;filter:blur(90px);}
+.t-love-cine .widescreen{position:absolute;left:0;right:0;height:10%;background:#060310;z-index:2;}
+.t-love-cine .widescreen.top{top:0;} .t-love-cine .widescreen.bot{bottom:0;}
+.t-love-cine .main{font-family:'Cormorant Garamond',serif;font-size:6%;color:#e9d5ff;line-height:1.8;text-align:center;font-style:italic;position:relative;z-index:3;opacity:0;}
+.t-love-cine .main em{color:#c084fc;font-style:normal;}
+.t-love-cine.go .main{animation:cinemaReveal 1.4s 0.5s forwards;}
+.t-love-cine.go .glow-l{animation:glowPulse 3s infinite alternate;}
+.t-love-cine .handle{font-family:'DM Sans',sans-serif;font-size:2%;letter-spacing:0.3em;color:#a855f744;position:relative;z-index:3;margin-top:8%;opacity:0;}
+.t-love-cine.go .handle{animation:fadeUp 0.6s 2.2s forwards;}
+
+/* ── T7: CONFIDENCE FADE ── */
+.t-conf-fade {
+  background: #0c0a04;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  width: 100%; height: 100%; padding: 10%;
+  font-family: 'Playfair Display', serif;
+}
+.t-conf-fade .glow-g{position:absolute;border-radius:50%;filter:blur(80px);}
+.t-conf-fade .bg-word{position:absolute;font-size:28%;color:#f59e0b;opacity:0.04;letter-spacing:-3px;font-family:'Playfair Display',serif;top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;white-space:nowrap;}
+.t-conf-fade .corn{position:absolute;border-color:#f59e0b;border-style:solid;}
+.t-conf-fade .corn.tl{top:7%;left:7%;width:8%;height:8%;border-width:1.5px 0 0 1.5px;}
+.t-conf-fade .corn.tr{top:7%;right:7%;width:8%;height:8%;border-width:1.5px 1.5px 0 0;}
+.t-conf-fade .corn.bl{bottom:7%;left:7%;width:8%;height:8%;border-width:0 0 1.5px 1.5px;}
+.t-conf-fade .corn.br{bottom:7%;right:7%;width:8%;height:8%;border-width:0 1.5px 1.5px 0;}
+.t-conf-fade .line{font-size:5%;color:#fef3c7;line-height:1.8;text-align:center;font-style:italic;position:relative;opacity:0;}
+.t-conf-fade .line em{color:#f59e0b;font-style:normal;}
+.t-conf-fade .sub{font-family:'DM Sans',sans-serif;font-size:3%;color:#c4b5fd;font-style:italic;text-align:center;margin-top:4%;position:relative;opacity:0;}
+.t-conf-fade .handle{font-family:'DM Sans',sans-serif;font-size:2%;letter-spacing:0.3em;color:#f59e0b44;position:relative;margin-top:6%;opacity:0;}
+.t-conf-fade.go .line:nth-child(4){animation:fadeUp 0.7s 0.2s forwards;}
+.t-conf-fade.go .line:nth-child(5){animation:fadeUp 0.7s 0.9s forwards;}
+.t-conf-fade.go .line:nth-child(6){animation:fadeUp 0.7s 1.6s forwards;}
+.t-conf-fade.go .sub{animation:fadeUp 0.7s 2.3s forwards;}
+.t-conf-fade.go .handle{animation:fadeUp 0.6s 3s forwards;}
+
+/* ── T8: CONFIDENCE STARS ── */
+.t-conf-stars {
+  background: #080610;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  width: 100%; height: 100%; padding: 10%;
+  overflow: hidden;
+}
+.t-conf-stars .star{position:absolute;color:#f59e0b;opacity:0;font-size:2%;}
+.t-conf-stars.go .star{animation:starTwinkle var(--dur,2s) var(--del,0s) infinite;}
+@keyframes starTwinkle{0%,100%{opacity:0;transform:scale(0.5);}50%{opacity:0.7;transform:scale(1.2);}}
+.t-conf-stars .main{font-family:'Playfair Display',serif;font-size:5.5%;color:#fef9ee;line-height:1.7;text-align:center;font-style:italic;position:relative;opacity:0;}
+.t-conf-stars .main em{color:#f59e0b;font-style:normal;}
+.t-conf-stars.go .main{animation:revealScale 1s 0.5s forwards;}
+.t-conf-stars .sub{font-family:'DM Sans',sans-serif;font-size:3%;color:#c4b5fd;font-style:italic;text-align:center;margin-top:5%;position:relative;opacity:0;}
+.t-conf-stars.go .sub{animation:fadeUp 0.6s 1.8s forwards;}
+.t-conf-stars .handle{font-family:'DM Sans',sans-serif;font-size:2%;letter-spacing:0.3em;color:#f59e0b44;position:relative;margin-top:6%;opacity:0;}
+.t-conf-stars.go .handle{animation:fadeUp 0.6s 2.5s forwards;}
+
+/* ── T9: CONFIDENCE CINEMATIC ── */
+.t-conf-cine {
+  background: #060500;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  width: 100%; height: 100%; padding: 10%;
+  overflow: hidden;
+}
+.t-conf-cine .glow-c{position:absolute;border-radius:50%;filter:blur(100px);}
+.t-conf-cine .widescreen{position:absolute;left:0;right:0;height:10%;background:#060500;z-index:2;}
+.t-conf-cine .widescreen.top{top:0;} .t-conf-cine .widescreen.bot{bottom:0;}
+.t-conf-cine .main{font-family:'Playfair Display',serif;font-size:5.5%;color:#fef9ee;line-height:1.7;text-align:center;font-style:italic;position:relative;z-index:3;opacity:0;}
+.t-conf-cine .main em{color:#f59e0b;font-style:normal;}
+.t-conf-cine.go .main{animation:cinemaReveal 1.4s 0.4s forwards;}
+.t-conf-cine.go .glow-c{animation:glowPulse 3s infinite alternate;}
+.t-conf-cine .sub{font-family:'DM Sans',sans-serif;font-size:3%;color:#c4b5fd;font-style:italic;text-align:center;position:relative;z-index:3;margin-top:6%;opacity:0;}
+.t-conf-cine.go .sub{animation:fadeUp 0.6s 2s forwards;}
+.t-conf-cine .handle{font-family:'DM Sans',sans-serif;font-size:2%;letter-spacing:0.3em;color:#f59e0b44;position:relative;z-index:3;margin-top:5%;opacity:0;}
+.t-conf-cine.go .handle{animation:fadeUp 0.5s 2.6s forwards;}
+
+/* ══ NEW BONUS TEMPLATES ══ */
+
+/* ── T10: MIDNIGHT JOURNAL (dark ink, typewriter feel) ── */
+.t-journal {
+  background: #08080a;
+  display: flex; flex-direction: column; align-items: flex-start; justify-content: center;
+  width: 100%; height: 100%; padding: 10% 12%;
+  overflow: hidden;
+}
+.t-journal .rule{position:absolute;left:0;right:0;height:1px;background:#ffffff06;}
+.t-journal .date{font-family:'DM Sans',sans-serif;font-size:2%;letter-spacing:0.3em;color:#ffffff22;margin-bottom:6%;opacity:0;}
+.t-journal .entry{font-family:'Cormorant Garamond',serif;font-size:5.5%;color:#f0eeff;line-height:1.9;font-style:italic;border-left:2px solid #ffffff11;padding-left:6%;margin-bottom:6%;opacity:0;}
+.t-journal .entry em{color:#a78bfa;font-style:normal;}
+.t-journal .sig{font-family:'Playfair Display',serif;font-size:3%;color:#ffffff33;font-style:italic;opacity:0;}
+.t-journal .handle{font-family:'DM Sans',sans-serif;font-size:2%;letter-spacing:0.3em;color:#ffffff22;margin-top:3%;opacity:0;}
+.t-journal.go .date{animation:typeIn 0.4s 0.2s forwards;}
+.t-journal.go .entry{animation:typeIn 0.8s 0.7s forwards;}
+.t-journal.go .sig{animation:typeIn 0.5s 1.8s forwards;}
+.t-journal.go .handle{animation:typeIn 0.4s 2.4s forwards;}
+@keyframes typeIn{from{opacity:0;transform:translateX(-8px);}to{opacity:1;transform:translateX(0);}}
+
+/* ── T11: NEON HEARTBREAK ── */
+.t-neon {
+  background: #040208;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  width: 100%; height: 100%; padding: 10%;
+  overflow: hidden;
+}
+.t-neon .glow-n{position:absolute;border-radius:50%;filter:blur(80px);}
+.t-neon .neon-line{position:absolute;left:0;right:0;height:1px;opacity:0.08;}
+.t-neon .main{font-family:'Playfair Display',serif;font-size:6%;color:#fff;line-height:1.6;text-align:center;font-style:italic;position:relative;opacity:0;text-shadow:0 0 30px #e879f944;}
+.t-neon .main em{color:#e879f9;font-style:normal;text-shadow:0 0 20px #e879f9,0 0 40px #e879f944;}
+.t-neon.go .main{animation:neonFlicker 0.8s 0.5s forwards;}
+@keyframes neonFlicker{
+  0%{opacity:0;}40%{opacity:0.8;}60%{opacity:0.4;}80%{opacity:0.9;}100%{opacity:1;}
+}
+.t-neon .sub{font-family:'DM Sans',sans-serif;font-size:2.8%;color:#e879f966;font-style:italic;text-align:center;margin-top:6%;position:relative;opacity:0;}
+.t-neon.go .sub{animation:fadeUp 0.6s 1.6s forwards;}
+.t-neon .handle{font-family:'DM Sans',sans-serif;font-size:2%;letter-spacing:0.3em;color:#e879f933;position:relative;margin-top:8%;opacity:0;}
+.t-neon.go .handle{animation:fadeUp 0.5s 2.2s forwards;}
+
+/* ── T12: GOLDEN HOUR (warm dreamy) ── */
+.t-golden {
+  background: #0e0800;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  width: 100%; height: 100%; padding: 10%;
+  overflow: hidden;
+}
+.t-golden .glow-gh{position:absolute;border-radius:50%;filter:blur(100px);}
+.t-golden .main{font-family:'Cormorant Garamond',serif;font-size:6.5%;color:#fef3c7;line-height:1.65;text-align:center;font-style:italic;font-weight:300;position:relative;opacity:0;}
+.t-golden .main em{color:#fbbf24;font-style:normal;}
+.t-golden.go .main{animation:goldenRise 1.2s 0.3s forwards;}
+@keyframes goldenRise{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+.t-golden .deco{display:flex;align-items:center;gap:4%;margin:5% 0;position:relative;opacity:0;}
+.t-golden .deco-line{flex:1;height:1px;background:#fbbf2433;}
+.t-golden .deco-mark{color:#fbbf24;font-size:3%;}
+.t-golden.go .deco{animation:fadeUp 0.5s 1.6s forwards;}
+.t-golden .sub{font-family:'DM Sans',sans-serif;font-size:3%;color:#fbbf2466;font-style:italic;text-align:center;position:relative;opacity:0;}
+.t-golden.go .sub{animation:fadeUp 0.5s 2s forwards;}
+.t-golden .handle{font-family:'DM Sans',sans-serif;font-size:2%;letter-spacing:0.3em;color:#fbbf2433;position:relative;margin-top:6%;opacity:0;}
+.t-golden.go .handle{animation:fadeUp 0.5s 2.5s forwards;}
+
+/* ── T13: OCEAN DEPTH (teal, deep calm) ── */
+.t-ocean {
+  background: #020d0e;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  width: 100%; height: 100%; padding: 10%;
+  overflow: hidden;
+}
+.t-ocean .wave{position:absolute;border-radius:50%;border:1px solid #2dd4bf11;animation:ripple var(--dur,4s) var(--del,0s) infinite ease-out;}
+@keyframes ripple{from{transform:scale(0.6);opacity:0.5;}to{transform:scale(2);opacity:0;}}
+.t-ocean .main{font-family:'Cormorant Garamond',serif;font-size:6%;color:#ccfbf1;line-height:1.7;text-align:center;font-style:italic;position:relative;opacity:0;}
+.t-ocean .main em{color:#2dd4bf;font-style:normal;}
+.t-ocean.go .main{animation:revealScale 1.1s 0.6s forwards;}
+.t-ocean .sub{font-family:'DM Sans',sans-serif;font-size:2.8%;color:#2dd4bf66;font-style:italic;text-align:center;margin-top:5%;position:relative;opacity:0;}
+.t-ocean.go .sub{animation:fadeUp 0.6s 1.9s forwards;}
+.t-ocean .handle{font-family:'DM Sans',sans-serif;font-size:2%;letter-spacing:0.3em;color:#2dd4bf33;position:relative;margin-top:6%;opacity:0;}
+.t-ocean.go .handle{animation:fadeUp 0.5s 2.5s forwards;}
+
+/* ── T14: CHERRY BLOSSOM RAIN ── */
+.t-cherry {
+  background: #0e060c;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  width: 100%; height: 100%; padding: 10%;
+  overflow: hidden;
+}
+.t-cherry .blossom{position:absolute;width:2%;height:3%;border-radius:50% 10% 50% 10%;background:#ff9ec5;opacity:0;}
+.t-cherry.go .blossom{animation:blossomFall var(--dur,4s) var(--del,0s) infinite linear;}
+@keyframes blossomFall{
+  0%{opacity:0;transform:translateY(-5%) rotate(0deg) translateX(0);}
+  10%{opacity:0.6;}
+  50%{transform:translateY(50%) rotate(180deg) translateX(var(--sway,10px));}
+  90%{opacity:0.3;}
+  100%{opacity:0;transform:translateY(105%) rotate(360deg) translateX(0);}
+}
+.t-cherry .main{font-family:'Playfair Display',serif;font-size:5.5%;color:#fdf2f8;line-height:1.7;text-align:center;font-style:italic;position:relative;opacity:0;}
+.t-cherry .main em{color:#ff9ec5;font-style:normal;}
+.t-cherry.go .main{animation:revealScale 1s 0.4s forwards;}
+.t-cherry .sub{font-family:'DM Sans',sans-serif;font-size:2.8%;color:#ff9ec566;font-style:italic;text-align:center;margin-top:4%;position:relative;opacity:0;}
+.t-cherry.go .sub{animation:fadeUp 0.6s 1.8s forwards;}
+.t-cherry .handle{font-family:'DM Sans',sans-serif;font-size:2%;letter-spacing:0.3em;color:#ff9ec533;position:relative;margin-top:6%;opacity:0;}
+.t-cherry.go .handle{animation:fadeUp 0.5s 2.4s forwards;}
+
+/* ── T15: POLAROID MEMORY ── */
+.t-polaroid {
+  background: #f5f0e8;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  width: 100%; height: 100%; padding: 10%;
+}
+.t-polaroid .frame{background:#fff;padding:5%;box-shadow:0 4px 24px #00000022;display:flex;flex-direction:column;align-items:center;gap:4%;width:80%;position:relative;opacity:0;}
+.t-polaroid.go .frame{animation:polaroidDrop 0.7s 0.3s cubic-bezier(0.34,1.56,0.64,1) forwards;}
+@keyframes polaroidDrop{from{opacity:0;transform:translateY(-20px) rotate(-2deg);}to{opacity:1;transform:translateY(0) rotate(-1.5deg);}}
+.t-polaroid .photo{width:100%;aspect-ratio:1;background:linear-gradient(135deg,#ffd6e7,#e9d5ff);margin-bottom:3%;display:flex;align-items:center;justify-content:center;font-size:8%;}
+.t-polaroid .caption{font-family:'Playfair Display',serif;font-size:3.5%;color:#1a1a2e;font-style:italic;text-align:center;line-height:1.6;}
+.t-polaroid .caption em{color:#a855f7;font-style:normal;}
+.t-polaroid .date-stamp{font-family:'DM Sans',sans-serif;font-size:1.8%;color:#1a1a2e44;letter-spacing:0.2em;margin-top:2%;}
+.t-polaroid .handle{font-family:'DM Sans',sans-serif;font-size:2%;letter-spacing:0.3em;color:#1a1a2e33;margin-top:5%;position:relative;opacity:0;}
+.t-polaroid.go .handle{animation:fadeUp 0.5s 1.2s forwards;}
+
+/* ── T16: AURORA (gradient shifting) ── */
+.t-aurora {
+  background: #040210;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  width: 100%; height: 100%; padding: 10%;
+  overflow: hidden;
+}
+.t-aurora .aurora-layer{position:absolute;border-radius:50%;filter:blur(80px);}
+.t-aurora.go .aurora-layer{animation:auroraShift var(--dur,6s) var(--del,0s) infinite alternate ease-in-out;}
+@keyframes auroraShift{from{transform:translate(0,0) scale(1);}to{transform:translate(var(--tx,20px),var(--ty,-20px)) scale(1.15);}}
+.t-aurora .main{font-family:'Cormorant Garamond',serif;font-size:6%;color:#f0e6ff;line-height:1.7;text-align:center;font-style:italic;position:relative;opacity:0;}
+.t-aurora .main em{color:#c4b5fd;font-style:normal;}
+.t-aurora.go .main{animation:revealScale 1.2s 0.5s forwards;}
+.t-aurora .sub{font-family:'DM Sans',sans-serif;font-size:3%;color:#a78bfa66;font-style:italic;text-align:center;margin-top:5%;position:relative;opacity:0;}
+.t-aurora.go .sub{animation:fadeUp 0.6s 2s forwards;}
+.t-aurora .handle{font-family:'DM Sans',sans-serif;font-size:2%;letter-spacing:0.3em;color:#c4b5fd33;position:relative;margin-top:7%;opacity:0;}
+.t-aurora.go .handle{animation:fadeUp 0.5s 2.6s forwards;}
+
+/* ── PLAY BUTTON OVERLAY ── */
+.play-overlay {
+  position: absolute; inset: 0; z-index: 10;
+  display: flex; align-items: center; justify-content: center;
+  background: #00000033;
+  transition: opacity 0.2s;
+}
+.play-btn {
+  width: 18%; aspect-ratio: 1;
+  background: #ffffff18;
+  border: 1px solid #ffffff33;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 7%;
+  color: #fff;
+  backdrop-filter: blur(4px);
+  transition: background 0.2s;
+}
+.play-btn:hover { background: #ffffff30; }
+.tcard.playing .play-overlay { opacity: 0; pointer-events: none; }
+
+/* ── PNG BADGE ── */
+.png-badge {
+  position: absolute; top: 8px; right: 8px; z-index: 5;
+  background: #ffffff15;
+  backdrop-filter: blur(4px);
+  border: 1px solid #ffffff22;
+  border-radius: 6px;
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  color: #fff;
+  padding: 3px 8px;
+}
+
+/* ── SELECTION CHECKMARK ── */
+.check {
+  position: absolute; top: 8px; left: 8px; z-index: 6;
+  width: 24px; height: 24px;
+  background: var(--purple);
+  border-radius: 50%;
+  display: none; align-items: center; justify-content: center;
+  font-size: 12px; color: #fff;
+}
+.tcard.selected .check { display: flex; }
+
+/* ── SELECTION TRAY ── */
+.tray {
+  position: fixed; bottom: 0; left: 0; right: 0;
+  background: #0e0d1c;
+  border-top: 1px solid var(--border);
+  padding: 16px 24px;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 16px;
+  transform: translateY(100%);
+  transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
+  z-index: 100;
+}
+
+.tray.visible { transform: translateY(0); }
+
+.tray-info { display: flex; flex-direction: column; gap: 3px; }
+.tray-count { font-size: 13px; color: var(--text); font-weight: 500; }
+.tray-names { font-size: 11px; color: var(--muted); }
+
+.tray-btn {
+  background: var(--purple);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 28px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.tray-clear {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  border-radius: 8px;
+  padding: 12px 16px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  cursor: pointer;
+}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-label">@love.notezunfiltered · template showcase</div>
+  <div class="hero-title">Pick your templates</div>
+  <div class="hero-sub">Click any template to select it · Click ▶ to preview the animation · Choose as many as you like</div>
+</div>
+
+<!-- SECTION 1: K-DRAMA ANIMATIONS -->
+<div class="section">
+  <div class="section-head">
+    <div class="section-title">🌸 K-drama · 3 animation styles</div>
+    <div class="section-note">original template · new animations</div>
+  </div>
+  <div class="grid">
+
+    <!-- K-DRAMA FADE -->
+    <div class="tcard" id="t1" onclick="toggleSelect('t1','K-drama · Fade in')">
+      <div class="preview">
+        <div class="check">✓</div>
+        <div class="t-kdrama-fade" id="p1">
+          <div class="bloom" style="width:55%;height:55%;background:#ff6b9d;top:-10%;left:-10%;"></div>
+          <div class="bloom" style="width:35%;height:35%;background:#ffd6e7;bottom:5%;right:5%;"></div>
+          <div class="border-f"></div>
+          <div class="corn tl"></div><div class="corn tr"></div><div class="corn bl"></div><div class="corn br"></div>
+          <div class="line">10 years of K-dramas</div>
+          <div class="line">and I still cry at <em>episode one</em></div>
+          <div class="line">like it's my very first time.</div>
+          <div class="handle" style="margin-top:8%;">@love.notezunfiltered</div>
+        </div>
+        <div class="play-overlay" onclick="playAnim(event,'p1')"><div class="play-btn">▶</div></div>
+      </div>
+      <div class="cmeta">
+        <div class="cmeta-row">
+          <div class="cname">K-drama · Fade In</div>
+          <span class="ctag" style="background:#ffb7d511;color:#ffb7d5;border:1px solid #ffb7d533;">🎬 MP4</span>
+        </div>
+        <div class="cdesc">Text lines fade in one by one — gentle, poetic reveal</div>
+        <div class="anim-badge"><div class="anim-dot" style="background:#ffb7d5;"></div> Line by line fade</div>
+      </div>
+    </div>
+
+    <!-- K-DRAMA PETALS -->
+    <div class="tcard" id="t2" onclick="toggleSelect('t2','K-drama · Petals')">
+      <div class="preview">
+        <div class="check">✓</div>
+        <div class="t-kdrama-petals" id="p2">
+          <div class="petal" style="width:2%;height:3%;left:15%;--dur:3.5s;--del:0s;"></div>
+          <div class="petal" style="width:1.5%;height:2.2%;left:35%;--dur:4s;--del:0.8s;"></div>
+          <div class="petal" style="width:1.8%;height:2.7%;left:60%;--dur:3.2s;--del:0.3s;"></div>
+          <div class="petal" style="width:1.2%;height:1.8%;left:80%;--dur:4.5s;--del:1.2s;"></div>
+          <div class="petal" style="width:2%;height:3%;left:50%;--dur:3.8s;--del:1.8s;"></div>
+          <div class="petal" style="width:1.5%;height:2.2%;left:25%;--dur:4.2s;--del:0.5s;"></div>
+          <div class="hangul">한국 드라마</div>
+          <div class="main">10 years of tears<br>and I regret <em>nothing.</em></div>
+          <div class="handle">@love.notezunfiltered</div>
+        </div>
+        <div class="play-overlay" onclick="playAnim(event,'p2')"><div class="play-btn">▶</div></div>
+      </div>
+      <div class="cmeta">
+        <div class="cmeta-row">
+          <div class="cname">K-drama · Petals</div>
+          <span class="ctag" style="background:#ffb7d511;color:#ffb7d5;border:1px solid #ffb7d533;">🎬 MP4</span>
+        </div>
+        <div class="cdesc">Cherry blossom petals fall while text scales in</div>
+        <div class="anim-badge"><div class="anim-dot" style="background:#ffb7d5;"></div> Floating petals</div>
+      </div>
+    </div>
+
+    <!-- K-DRAMA CINEMATIC -->
+    <div class="tcard" id="t3" onclick="toggleSelect('t3','K-drama · Cinematic')">
+      <div class="preview">
+        <div class="check">✓</div>
+        <div class="t-kdrama-cine" id="p3">
+          <div class="glow-cine" style="width:60%;height:60%;background:#ff6b9d;opacity:0.15;top:50%;left:50%;transform:translate(-50%,-50%)"></div>
+          <div class="widescreen top"></div>
+          <div class="widescreen bot"></div>
+          <div class="main">Some stories stay with you<br>long after the <em>credits roll.</em></div>
+          <div class="handle">@love.notezunfiltered</div>
+        </div>
+        <div class="play-overlay" onclick="playAnim(event,'p3')"><div class="play-btn">▶</div></div>
+      </div>
+      <div class="cmeta">
+        <div class="cmeta-row">
+          <div class="cname">K-drama · Cinematic</div>
+          <span class="ctag" style="background:#ffb7d511;color:#ffb7d5;border:1px solid #ffb7d533;">🎬 MP4</span>
+        </div>
+        <div class="cdesc">Widescreen bars + letter-spacing reveal — movie poster feel</div>
+        <div class="anim-badge"><div class="anim-dot" style="background:#ffb7d5;"></div> Cinematic zoom</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- SECTION 2: LOVE ANIMATIONS -->
+<div class="section">
+  <div class="section-head">
+    <div class="section-title">💜 Overthinker in Love · 3 animation styles</div>
+    <div class="section-note">original template · new animations</div>
+  </div>
+  <div class="grid">
+
+    <!-- LOVE BUBBLE POP -->
+    <div class="tcard" id="t4" onclick="toggleSelect('t4','Love · Bubble Pop')">
+      <div class="preview">
+        <div class="check">✓</div>
+        <div class="t-love-pop" id="p4">
+          <div class="lglow" style="width:55%;height:55%;background:#7c3aed;opacity:0.12;top:-15%;left:-10%;"></div>
+          <div class="lglow" style="width:40%;height:40%;background:#db2777;opacity:0.10;bottom:-10%;right:-10%;"></div>
+          <div class="eyebrow">overthinker in love</div>
+          <div class="br1">
+            <div class="br1-tag">brain · 2am</div>
+            <div class="br1-txt">He texts me <em>good morning</em> every day.<br>I still checked her profile.</div>
+          </div>
+          <div class="br2"><div class="br2-txt">The problem is me. I know. 💜</div></div>
+          <div class="caption">— we are healing. slowly.</div>
+          <div class="handle">@love.notezunfiltered</div>
+        </div>
+        <div class="play-overlay" onclick="playAnim(event,'p4')"><div class="play-btn">▶</div></div>
+      </div>
+      <div class="cmeta">
+        <div class="cmeta-row">
+          <div class="cname">Love · Bubble Pop</div>
+          <span class="ctag" style="background:#a855f711;color:#c084fc;border:1px solid #a855f733;">🎬 MP4</span>
+        </div>
+        <div class="cdesc">Chat bubbles spring in one by one with a bounce</div>
+        <div class="anim-badge"><div class="anim-dot" style="background:#c084fc;"></div> Bubble pop</div>
+      </div>
+    </div>
+
+    <!-- LOVE PARTICLES -->
+    <div class="tcard" id="t5" onclick="toggleSelect('t5','Love · Particles')">
+      <div class="preview">
+        <div class="check">✓</div>
+        <div class="t-love-particles" id="p5">
+          <div class="part" style="width:6px;height:6px;background:#c084fc;left:20%;top:70%;--dur:3.5s;--del:0s;"></div>
+          <div class="part" style="width:4px;height:4px;background:#f472b6;left:40%;top:80%;--dur:4s;--del:0.6s;"></div>
+          <div class="part" style="width:5px;height:5px;background:#a855f7;left:65%;top:75%;--dur:3.2s;--del:1.1s;"></div>
+          <div class="part" style="width:3px;height:3px;background:#e879f9;left:80%;top:85%;--dur:4.5s;--del:0.3s;"></div>
+          <div class="part" style="width:5px;height:5px;background:#c084fc;left:50%;top:90%;--dur:3.8s;--del:1.8s;"></div>
+          <div class="heart" style="left:15%;top:75%;--dur:5s;--del:0.5s;">💜</div>
+          <div class="heart" style="left:75%;top:80%;--dur:4.5s;--del:1.5s;">🩷</div>
+          <div class="main">Research. Not insecurity.<br>I am a <em>scientist</em> of my own anxiety.</div>
+          <div class="handle">@love.notezunfiltered</div>
+        </div>
+        <div class="play-overlay" onclick="playAnim(event,'p5')"><div class="play-btn">▶</div></div>
+      </div>
+      <div class="cmeta">
+        <div class="cmeta-row">
+          <div class="cname">Love · Particles</div>
+          <span class="ctag" style="background:#a855f711;color:#c084fc;border:1px solid #a855f733;">🎬 MP4</span>
+        </div>
+        <div class="cdesc">Floating hearts & particles rise as text reveals</div>
+        <div class="anim-badge"><div class="anim-dot" style="background:#c084fc;"></div> Floating particles</div>
+      </div>
+    </div>
+
+    <!-- LOVE CINEMATIC -->
+    <div class="tcard" id="t6" onclick="toggleSelect('t6','Love · Cinematic')">
+      <div class="preview">
+        <div class="check">✓</div>
+        <div class="t-love-cine" id="p6">
+          <div class="glow-l" style="width:55%;height:55%;background:#7c3aed;opacity:0.15;top:-10%;left:-10%;"></div>
+          <div class="glow-l" style="width:40%;height:40%;background:#db2777;opacity:0.12;bottom:-10%;right:-5%;"></div>
+          <div class="widescreen top"></div>
+          <div class="widescreen bot"></div>
+          <div class="main">He called me beautiful.<br>I <em>fact-checked</em> his ex.</div>
+          <div class="handle">@love.notezunfiltered</div>
+        </div>
+        <div class="play-overlay" onclick="playAnim(event,'p6')"><div class="play-btn">▶</div></div>
+      </div>
+      <div class="cmeta">
+        <div class="cmeta-row">
+          <div class="cname">Love · Cinematic</div>
+          <span class="ctag" style="background:#a855f711;color:#c084fc;border:1px solid #a855f733;">🎬 MP4</span>
+        </div>
+        <div class="cdesc">Purple cinematic reveal — dark, moody, dramatic</div>
+        <div class="anim-badge"><div class="anim-dot" style="background:#c084fc;"></div> Cinematic glow</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- SECTION 3: CONFIDENCE ANIMATIONS -->
+<div class="section">
+  <div class="section-head">
+    <div class="section-title">✨ Confidence Journey · 3 animation styles</div>
+    <div class="section-note">original template · new animations</div>
+  </div>
+  <div class="grid">
+
+    <!-- CONF FADE -->
+    <div class="tcard" id="t7" onclick="toggleSelect('t7','Confidence · Fade In')">
+      <div class="preview">
+        <div class="check">✓</div>
+        <div class="t-conf-fade" id="p7">
+          <div class="glow-g" style="width:55%;height:55%;background:#f59e0b;opacity:0.08;top:50%;left:50%;transform:translate(-50%,-50%)"></div>
+          <div class="glow-g" style="width:30%;height:30%;background:#a78bfa;opacity:0.12;bottom:-5%;right:-5%;"></div>
+          <div class="bg-word">GLOW</div>
+          <div class="corn tl"></div><div class="corn tr"></div><div class="corn bl"></div><div class="corn br"></div>
+          <div class="line">Some days we feel <em>beautiful.</em></div>
+          <div class="line">Some days we really don't.</div>
+          <div class="line">But honestly?</div>
+          <div class="sub">A little trust in ourselves and a genuine smile —<br>that's what confidence is made of.</div>
+          <div class="handle">@love.notezunfiltered</div>
+        </div>
+        <div class="play-overlay" onclick="playAnim(event,'p7')"><div class="play-btn">▶</div></div>
+      </div>
+      <div class="cmeta">
+        <div class="cmeta-row">
+          <div class="cname">Confidence · Fade In</div>
+          <span class="ctag" style="background:#f59e0b11;color:#f59e0b;border:1px solid #f59e0b33;">🎬 MP4</span>
+        </div>
+        <div class="cdesc">Each line fades in slowly — warm, meditative feel</div>
+        <div class="anim-badge"><div class="anim-dot" style="background:#f59e0b;"></div> Line by line</div>
+      </div>
+    </div>
+
+    <!-- CONF STARS -->
+    <div class="tcard" id="t8" onclick="toggleSelect('t8','Confidence · Stars')">
+      <div class="preview">
+        <div class="check">✓</div>
+        <div class="t-conf-stars" id="p8">
+          <div class="star" style="left:10%;top:20%;--dur:1.8s;--del:0.2s;">✦</div>
+          <div class="star" style="left:85%;top:15%;--dur:2.3s;--del:0.8s;">✦</div>
+          <div class="star" style="left:20%;top:80%;--dur:1.5s;--del:1.2s;">✦</div>
+          <div class="star" style="left:75%;top:75%;--dur:2s;--del:0.4s;">✦</div>
+          <div class="star" style="left:50%;top:10%;--dur:1.7s;--del:1.5s;">✦</div>
+          <div class="star" style="left:90%;top:50%;--dur:2.2s;--del:0.7s;">✦</div>
+          <div class="star" style="left:5%;top:50%;--dur:1.9s;--del:1s;">✦</div>
+          <div class="main">Trust yourself.<br>Smile anyway.<br>That's <em>confidence.</em></div>
+          <div class="sub">it really is.</div>
+          <div class="handle">@love.notezunfiltered</div>
+        </div>
+        <div class="play-overlay" onclick="playAnim(event,'p8')"><div class="play-btn">▶</div></div>
+      </div>
+      <div class="cmeta">
+        <div class="cmeta-row">
+          <div class="cname">Confidence · Stars</div>
+          <span class="ctag" style="background:#f59e0b11;color:#f59e0b;border:1px solid #f59e0b33;">🎬 MP4</span>
+        </div>
+        <div class="cdesc">Gold stars twinkle as empowering text scales in</div>
+        <div class="anim-badge"><div class="anim-dot" style="background:#f59e0b;"></div> Twinkling stars</div>
+      </div>
+    </div>
+
+    <!-- CONF CINEMATIC -->
+    <div class="tcard" id="t9" onclick="toggleSelect('t9','Confidence · Cinematic')">
+      <div class="preview">
+        <div class="check">✓</div>
+        <div class="t-conf-cine" id="p9">
+          <div class="glow-c" style="width:60%;height:60%;background:#f59e0b;opacity:0.09;top:50%;left:50%;transform:translate(-50%,-50%)"></div>
+          <div class="glow-c" style="width:35%;height:35%;background:#a78bfa;opacity:0.12;bottom:-10%;right:-5%;"></div>
+          <div class="widescreen top"></div>
+          <div class="widescreen bot"></div>
+          <div class="main">We are not broken.<br>We are <em>becoming.</em></div>
+          <div class="sub">slowly. beautifully. together.</div>
+          <div class="handle">@love.notezunfiltered</div>
+        </div>
+        <div class="play-overlay" onclick="playAnim(event,'p9')"><div class="play-btn">▶</div></div>
+      </div>
+      <div class="cmeta">
+        <div class="cmeta-row">
+          <div class="cname">Confidence · Cinematic</div>
+          <span class="ctag" style="background:#f59e0b11;color:#f59e0b;border:1px solid #f59e0b33;">🎬 MP4</span>
+        </div>
+        <div class="cdesc">Gold cinematic reveal — bold, empowering, filmic</div>
+        <div class="anim-badge"><div class="anim-dot" style="background:#f59e0b;"></div> Cinematic zoom</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- SECTION 4: BONUS NEW TEMPLATES -->
+<div class="section">
+  <div class="section-head">
+    <div class="section-title">🌟 All New Templates</div>
+    <div class="section-note">fresh designs beyond the original 3</div>
+  </div>
+  <div class="grid">
+
+    <!-- MIDNIGHT JOURNAL -->
+    <div class="tcard" id="t10" onclick="toggleSelect('t10','Midnight Journal')">
+      <div class="preview">
+        <div class="check">✓</div>
+        <div class="t-journal" id="p10">
+          <div class="rule" style="top:25%"></div><div class="rule" style="top:50%"></div><div class="rule" style="top:75%"></div>
+          <div class="date">September 20 · 2am</div>
+          <div class="entry">he's asleep. I'm still thinking about <em>everything</em> and nothing at the same time.</div>
+          <div class="sig">— from the notes app</div>
+          <div class="handle">@love.notezunfiltered</div>
+        </div>
+        <div class="play-overlay" onclick="playAnim(event,'p10')"><div class="play-btn">▶</div></div>
+      </div>
+      <div class="cmeta">
+        <div class="cmeta-row">
+          <div class="cname">Midnight Journal</div>
+          <span class="ctag" style="background:#a78bfa11;color:#a78bfa;border:1px solid #a78bfa33;">🎬 + 📸</span>
+        </div>
+        <div class="cdesc">Dark ink, journal-entry aesthetic with ruled lines — typewriter slide-in</div>
+        <div class="anim-badge"><div class="anim-dot" style="background:#a78bfa;"></div> Typewriter reveal</div>
+      </div>
+    </div>
+
+    <!-- NEON HEARTBREAK -->
+    <div class="tcard" id="t11" onclick="toggleSelect('t11','Neon Heartbreak')">
+      <div class="preview">
+        <div class="check">✓</div>
+        <div class="t-neon" id="p11">
+          <div class="glow-n" style="width:50%;height:50%;background:#e879f9;opacity:0.12;top:-10%;left:-10%;"></div>
+          <div class="glow-n" style="width:40%;height:40%;background:#818cf8;opacity:0.10;bottom:-5%;right:-5%;"></div>
+          <div class="neon-line" style="top:30%;background:linear-gradient(to right,transparent,#e879f911,transparent)"></div>
+          <div class="neon-line" style="top:70%;background:linear-gradient(to right,transparent,#818cf811,transparent)"></div>
+          <div class="main">she's just a <em>name</em> I can't stop searching.</div>
+          <div class="sub">it's not love. it's anxiety.</div>
+          <div class="handle">@love.notezunfiltered</div>
+        </div>
+        <div class="play-overlay" onclick="playAnim(event,'p11')"><div class="play-btn">▶</div></div>
+      </div>
+      <div class="cmeta">
+        <div class="cmeta-row">
+          <div class="cname">Neon Heartbreak</div>
+          <span class="ctag" style="background:#e879f911;color:#e879f9;border:1px solid #e879f933;">🎬 + 📸</span>
+        </div>
+        <div class="cdesc">Neon pink-violet glow with a flicker-on reveal — edgy & raw</div>
+        <div class="anim-badge"><div class="anim-dot" style="background:#e879f9;"></div> Neon flicker</div>
+      </div>
+    </div>
+
+    <!-- GOLDEN HOUR -->
+    <div class="tcard" id="t12" onclick="toggleSelect('t12','Golden Hour')">
+      <div class="preview">
+        <div class="check">✓</div>
+        <div class="t-golden" id="p12">
+          <div class="glow-gh" style="width:60%;height:60%;background:#f59e0b;opacity:0.12;top:20%;left:10%;"></div>
+          <div class="glow-gh" style="width:40%;height:40%;background:#fb923c;opacity:0.09;bottom:-5%;right:5%;"></div>
+          <div class="main">on good days, I am <em>golden.</em><br>on bad days, I am still here.</div>
+          <div class="deco">
+            <div class="deco-line"></div>
+            <div class="deco-mark">✦</div>
+            <div class="deco-line"></div>
+          </div>
+          <div class="sub">both count.</div>
+          <div class="handle">@love.notezunfiltered</div>
+        </div>
+        <div class="play-overlay" onclick="playAnim(event,'p12')"><div class="play-btn">▶</div></div>
+      </div>
+      <div class="cmeta">
+        <div class="cmeta-row">
+          <div class="cname">Golden Hour</div>
+          <span class="ctag" style="background:#fbbf2411;color:#fbbf24;border:1px solid #fbbf2433;">🎬 + 📸</span>
+        </div>
+        <div class="cdesc">Warm amber tones, Cormorant Garamond serif — soft & dreamy rise</div>
+        <div class="anim-badge"><div class="anim-dot" style="background:#fbbf24;"></div> Warm rise</div>
+      </div>
+    </div>
+
+    <!-- OCEAN DEPTH -->
+    <div class="tcard" id="t13" onclick="toggleSelect('t13','Ocean Depth')">
+      <div class="preview">
+        <div class="check">✓</div>
+        <div class="t-ocean" id="p13">
+          <div class="wave" style="width:60%;height:60%;top:20%;left:20%;--dur:4s;--del:0s;"></div>
+          <div class="wave" style="width:80%;height:80%;top:10%;left:10%;--dur:4s;--del:1.5s;"></div>
+          <div class="main">some feelings are too <em>deep</em> to explain.<br>so I just sit with them.</div>
+          <div class="sub">and that's okay too.</div>
+          <div class="handle">@love.notezunfiltered</div>
+        </div>
+        <div class="play-overlay" onclick="playAnim(event,'p13')"><div class="play-btn">▶</div></div>
+      </div>
+      <div class="cmeta">
+        <div class="cmeta-row">
+          <div class="cname">Ocean Depth</div>
+          <span class="ctag" style="background:#2dd4bf11;color:#2dd4bf;border:1px solid #2dd4bf33;">🎬 + 📸</span>
+        </div>
+        <div class="cdesc">Teal ripple waves + calm text reveal — deep, meditative mood</div>
+        <div class="anim-badge"><div class="anim-dot" style="background:#2dd4bf;"></div> Ripple waves</div>
+      </div>
+    </div>
+
+    <!-- CHERRY BLOSSOM RAIN -->
+    <div class="tcard" id="t14" onclick="toggleSelect('t14','Cherry Blossom Rain')">
+      <div class="preview">
+        <div class="check">✓</div>
+        <div class="t-cherry" id="p14">
+          <div class="blossom" style="left:10%;top:-5%;--dur:3.5s;--del:0s;--sway:15px;"></div>
+          <div class="blossom" style="left:30%;top:-5%;--dur:4s;--del:0.7s;--sway:-10px;"></div>
+          <div class="blossom" style="left:55%;top:-5%;--dur:3.2s;--del:1.3s;--sway:20px;"></div>
+          <div class="blossom" style="left:75%;top:-5%;--dur:4.5s;--del:0.4s;--sway:-15px;"></div>
+          <div class="blossom" style="left:90%;top:-5%;--dur:3.8s;--del:1.8s;--sway:8px;"></div>
+          <div class="blossom" style="left:45%;top:-5%;--dur:4.2s;--del:0.9s;--sway:-20px;"></div>
+          <div class="main">she fell in love with <em>every story</em><br>before she found her own.</div>
+          <div class="sub">still writing it.</div>
+          <div class="handle">@love.notezunfiltered</div>
+        </div>
+        <div class="play-overlay" onclick="playAnim(event,'p14')"><div class="play-btn">▶</div></div>
+      </div>
+      <div class="cmeta">
+        <div class="cmeta-row">
+          <div class="cname">Cherry Blossom Rain</div>
+          <span class="ctag" style="background:#ff9ec511;color:#ff9ec5;border:1px solid #ff9ec533;">🎬 + 📸</span>
+        </div>
+        <div class="cdesc">Pink blossoms drift down as soft serif text reveals — romantic</div>
+        <div class="anim-badge"><div class="anim-dot" style="background:#ff9ec5;"></div> Blossom rain</div>
+      </div>
+    </div>
+
+    <!-- POLAROID -->
+    <div class="tcard" id="t15" onclick="toggleSelect('t15','Polaroid Memory')">
+      <div class="preview">
+        <div class="check">✓</div>
+        <div class="t-polaroid" id="p15">
+          <div class="frame">
+            <div class="photo">🌸</div>
+            <div class="caption">we were <em>beautiful</em><br>even when we didn't know it.</div>
+            <div class="date-stamp">September 2026</div>
+          </div>
+          <div class="handle">@love.notezunfiltered</div>
+        </div>
+        <div class="play-overlay" onclick="playAnim(event,'p15')"><div class="play-btn">▶</div></div>
+      </div>
+      <div class="cmeta">
+        <div class="cmeta-row">
+          <div class="cname">Polaroid Memory</div>
+          <span class="ctag" style="background:#a855f711;color:#c084fc;border:1px solid #a855f733;">🎬 + 📸</span>
+        </div>
+        <div class="cdesc">Light background polaroid frame drops in with a tilt — nostalgic</div>
+        <div class="anim-badge"><div class="anim-dot" style="background:#c084fc;"></div> Polaroid drop</div>
+      </div>
+    </div>
+
+    <!-- AURORA -->
+    <div class="tcard" id="t16" onclick="toggleSelect('t16','Aurora')">
+      <div class="preview">
+        <div class="check">✓</div>
+        <div class="t-aurora" id="p16">
+          <div class="aurora-layer" style="width:50%;height:50%;background:#7c3aed;opacity:0.15;top:0%;left:-10%;--dur:6s;--del:0s;--tx:30px;--ty:20px;"></div>
+          <div class="aurora-layer" style="width:45%;height:45%;background:#0891b2;opacity:0.12;top:20%;right:-10%;--dur:7s;--del:1s;--tx:-20px;--ty:-30px;"></div>
+          <div class="aurora-layer" style="width:40%;height:40%;background:#a855f7;opacity:0.10;bottom:-5%;left:20%;--dur:5s;--del:0.5s;--tx:15px;--ty:-15px;"></div>
+          <div class="main">somewhere between who I was<br>and who I'm <em>becoming,</em><br>I found peace.</div>
+          <div class="sub">still finding it, actually.</div>
+          <div class="handle">@love.notezunfiltered</div>
+        </div>
+        <div class="play-overlay" onclick="playAnim(event,'p16')"><div class="play-btn">▶</div></div>
+      </div>
+      <div class="cmeta">
+        <div class="cmeta-row">
+          <div class="cname">Aurora</div>
+          <span class="ctag" style="background:#7c3aed11;color:#a78bfa;border:1px solid #7c3aed33;">🎬 + 📸</span>
+        </div>
+        <div class="cdesc">Shifting aurora layers of violet, teal & purple — ethereal, dreamy</div>
+        <div class="anim-badge"><div class="anim-dot" style="background:#a78bfa;"></div> Aurora shift</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- SELECTION TRAY -->
+<div class="tray" id="tray">
+  <div class="tray-info">
+    <div class="tray-count" id="trayCount">0 templates selected</div>
+    <div class="tray-names" id="trayNames"></div>
+  </div>
+  <div style="display:flex;gap:10px;">
+    <button class="tray-clear" onclick="clearAll()">Clear</button>
+    <button class="tray-btn" onclick="confirmSelection()">Add to Studio →</button>
+  </div>
+</div>
+
+<script>
+const selected = new Set();
+const names = {};
+
+function toggleSelect(id, name) {
+  const card = document.getElementById(id);
+  if (selected.has(id)) {
+    selected.delete(id);
+    card.classList.remove('selected');
+  } else {
+    selected.add(id);
+    names[id] = name;
+    card.classList.add('selected');
+  }
+  updateTray();
+}
+
+function updateTray() {
+  const tray = document.getElementById('tray');
+  const count = document.getElementById('trayCount');
+  const nameEl = document.getElementById('trayNames');
+  if (selected.size > 0) {
+    tray.classList.add('visible');
+    count.textContent = selected.size + ' template' + (selected.size > 1 ? 's' : '') + ' selected';
+    nameEl.textContent = [...selected].map(id => names[id]).join(' · ');
+  } else {
+    tray.classList.remove('visible');
+  }
+}
+
+function clearAll() {
+  selected.forEach(id => document.getElementById(id).classList.remove('selected'));
+  selected.clear();
+  updateTray();
+}
+
+function confirmSelection() {
+  const list = [...selected].map(id => names[id]).join(', ');
+  alert('Great picks! 🌸\n\nYou selected:\n' + list + '\n\nTell me these template names and I\'ll add them to the studio!');
+}
+
+function playAnim(e, previewId) {
+  e.stopPropagation();
+  const preview = document.getElementById(previewId);
+  const card = preview.closest('.tcard');
+  const overlay = card.querySelector('.play-overlay');
+
+  // Remove go class, force reflow, add back
+  preview.classList.remove('go');
+  void preview.offsetWidth;
+  preview.classList.add('go');
+  card.classList.add('playing');
+  overlay.style.opacity = '0';
+  overlay.style.pointerEvents = 'none';
+
+  setTimeout(() => {
+    card.classList.remove('playing');
+    overlay.style.opacity = '';
+    overlay.style.pointerEvents = '';
+  }, 4000);
+}
+</script>
+</body>
+</html>

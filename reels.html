@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Song Reels — Pearl Studio</title>
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/base.css" />
+  <link rel="stylesheet" href="assets/css/editor.css" />
+  <link rel="stylesheet" href="assets/css/reels.css" />
+</head>
+<body>
+  <div class="app">
+    <div class="app-nav">
+      <a class="logo" href="index.html">
+        <span class="logo-mark"></span>
+        Pearl Studio
+      </a>
+      <div style="display:flex; gap:14px; align-items:center;">
+        <a class="back-link" href="editor.html">Template editor</a>
+        <a class="back-link" href="index.html">← Back to templates</a>
+      </div>
+    </div>
+
+    <div class="app-body reel-body">
+      <aside class="panel">
+        <h4>Template</h4>
+        <div class="template-list" id="reelTemplateList"></div>
+      </aside>
+
+      <main class="stage reel-stage">
+        <div class="stage-canvas-wrap reel-canvas-wrap">
+          <canvas id="reelCanvas"></canvas>
+        </div>
+        <div class="reel-transport">
+          <button class="btn" id="playPauseBtn" disabled>▶ Play</button>
+          <input type="range" id="scrubInput" min="0" max="100" value="0" step="0.1" disabled />
+          <span class="reel-time" id="reelTimeLabel">0:00 / 0:00</span>
+        </div>
+      </main>
+
+      <aside class="panel panel-right">
+        <h4>Song</h4>
+        <div class="field-group">
+          <label>Audio file</label>
+          <div class="upload-drop" id="audioDrop">
+            Click or drag an audio file here
+            <input type="file" id="audioInput" accept="audio/*" />
+          </div>
+          <p class="hint-text" id="audioStatus">No audio loaded yet.</p>
+        </div>
+        <div class="field-group">
+          <label for="songTitleInput">Song title</label>
+          <input type="text" id="songTitleInput" placeholder="Episode One" />
+        </div>
+        <div class="field-group">
+          <label for="artistInput">Artist <span class="hint-text-inline">(optional)</span></label>
+          <input type="text" id="artistInput" />
+        </div>
+        <div class="field-group" id="albumArtFieldGroup" style="display:none;">
+          <label>Album art <span class="hint-text-inline">(optional)</span></label>
+          <div class="upload-drop" id="albumArtDrop">
+            Click or drag cover art here
+            <input type="file" id="albumArtInput" accept="image/*" />
+          </div>
+        </div>
+        <div class="field-group">
+          <label for="handleInput">Handle / footer text</label>
+          <input type="text" id="handleInput" />
+        </div>
+
+        <h4 style="margin-top: 22px;">Colors</h4>
+        <div class="field-group">
+          <div class="color-row">
+            <label class="color-field">
+              <input type="color" id="reelBgColorInput" />
+              <span>Background</span>
+            </label>
+            <label class="color-field">
+              <input type="color" id="reelAccentColorInput" />
+              <span>Accent</span>
+            </label>
+          </div>
+        </div>
+        <div class="field-group" id="reelAccent2FieldGroup" style="display:none;">
+          <div class="color-row">
+            <label class="color-field">
+              <input type="color" id="reelAccent2ColorInput" />
+              <span>Accent 2</span>
+            </label>
+          </div>
+        </div>
+        <div class="field-group">
+          <button class="btn" id="resetReelColorsBtn" style="width:100%;">Reset to template colors</button>
+        </div>
+
+        <h4 style="margin-top: 22px;">Elements</h4>
+        <div class="field-group">
+          <p class="hint-text" style="margin:0 0 8px;">Add a music-player widget, stickers, tags, or doodles on top of the reel. Drag one on the canvas to move it; use its controls below to recolor, resize, rotate, or edit its text.</p>
+          <div id="reelElementCatalog"></div>
+          <div id="reelElementList" class="layer-list"></div>
+        </div>
+
+        <h4 style="margin-top: 22px;">Lyrics</h4>
+        <div class="field-group">
+          <label for="lyricsInput">Paste lyrics, one line per cue</label>
+          <textarea id="lyricsInput" rows="6" placeholder="10 years of K-dramas&#10;and I still cry&#10;at episode one&#10;like it's my very first time"></textarea>
+        </div>
+        <div class="field-group">
+          <button class="btn" id="loadLyricsBtn" style="width:100%;">Split into lines</button>
+          <p class="hint-text">Splitting resets any timestamps already synced below — edit the text here first, then split.</p>
+        </div>
+
+        <h4 style="margin-top: 22px;">Sync</h4>
+        <div class="field-group">
+          <div class="sync-controls">
+            <button class="btn btn-primary" id="startSyncBtn" disabled>Start sync</button>
+            <button class="btn" id="resyncBtn" disabled>Clear timestamps</button>
+          </div>
+          <p class="hint-text">Play the song, then press <strong>Tap</strong> (or the spacebar) exactly when each line starts.</p>
+          <button class="btn" id="tapBtn" style="width:100%; display:none;" disabled>⏺ Tap for next line</button>
+        </div>
+        <div class="cue-list" id="cueList"></div>
+
+        <h4 style="margin-top: 22px;">Clip</h4>
+        <div class="field-group">
+          <div class="color-row">
+            <label class="color-field" style="flex-direction:column; align-items:flex-start; gap:4px;">
+              <span>Start (s)</span>
+              <input type="number" id="clipStartInput" min="0" step="0.1" value="0" style="width:100%; background:transparent; border:none; color:var(--text);" />
+            </label>
+            <label class="color-field" style="flex-direction:column; align-items:flex-start; gap:4px;">
+              <span>End (s)</span>
+              <input type="number" id="clipEndInput" min="0" step="0.1" value="30" style="width:100%; background:transparent; border:none; color:var(--text);" />
+            </label>
+          </div>
+          <p class="hint-text">The exported reel covers this range of the song. Defaults to the first 30 seconds.</p>
+        </div>
+
+        <h4 style="margin-top: 22px;">Export</h4>
+        <div class="export-actions">
+          <button class="btn btn-primary" id="downloadReelBtn" style="grid-column: 1 / -1;">Download MP4 with audio</button>
+        </div>
+        <div class="progress-bar" id="reelProgressBar">
+          <div class="progress-bar-fill" id="reelProgressBarFill"></div>
+        </div>
+        <div class="export-status" id="reelExportStatus"></div>
+      </aside>
+    </div>
+  </div>
+
+  <script src="assets/js/reels-data.js"></script>
+  <script src="assets/js/reels-renderer.js"></script>
+  <script src="assets/js/elements-data.js"></script>
+  <script src="assets/js/elements-renderer.js"></script>
+  <script src="assets/js/elements-ui.js"></script>
+  <script src="assets/js/export-png.js"></script>
+  <script src="assets/js/export-reel-video.js"></script>
+  <script src="assets/js/reels.js"></script>
+</body>
+</html>

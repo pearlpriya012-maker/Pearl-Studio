@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Editor — Pearl Studio</title>
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/base.css" />
+  <link rel="stylesheet" href="assets/css/editor.css" />
+</head>
+<body>
+  <div class="app">
+    <div class="app-nav">
+      <a class="logo" href="index.html">
+        <span class="logo-mark"></span>
+        Pearl Studio
+      </a>
+      <div style="display:flex; gap:14px; align-items:center;">
+        <a class="back-link" href="reels.html">Song Reels</a>
+        <a class="back-link" href="index.html">← Back to templates</a>
+      </div>
+    </div>
+
+    <div class="app-body">
+      <aside class="panel">
+        <h4>Format</h4>
+        <div class="format-switch" id="formatSwitch"></div>
+
+        <h4>Templates</h4>
+        <div class="template-list" id="templateList"></div>
+      </aside>
+
+      <main class="stage">
+        <div class="stage-canvas-wrap">
+          <canvas id="previewCanvas"></canvas>
+        </div>
+      </main>
+
+      <aside class="panel panel-right">
+        <h4>Generate with AI</h4>
+        <div class="field-group">
+          <label for="groqKeyInput">Groq API key</label>
+          <input type="password" id="groqKeyInput" placeholder="gsk_..." autocomplete="off" />
+          <p class="hint-text">Stored only in your browser's local storage and sent directly to Groq — never through any server we run. Get a free key at <a href="https://console.groq.com/keys" target="_blank" rel="noopener">console.groq.com/keys</a>.</p>
+        </div>
+        <div class="field-group">
+          <label for="groqModelInput">Model <span class="hint-text-inline">(optional)</span></label>
+          <input type="text" id="groqModelInput" placeholder="llama-3.1-8b-instant" />
+          <p class="hint-text">Groq retires/renames model IDs periodically. If generation fails with a "model does not exist" error, check the current list at <a href="https://console.groq.com/docs/models" target="_blank" rel="noopener">console.groq.com/docs/models</a> and paste a valid one here.</p>
+        </div>
+        <div class="field-group">
+          <label for="aiPromptInput">Describe what you want</label>
+          <textarea id="aiPromptInput" rows="2" placeholder="e.g. missing someone from a k-drama binge at 2am"></textarea>
+        </div>
+        <div class="field-group">
+          <button class="btn" id="generateAiBtn" style="width:100%;">✨ Generate content</button>
+        </div>
+        <div class="ai-preview" id="aiPreview" style="display:none;">
+          <div class="ai-preview-title" id="aiPreviewTitle"></div>
+          <div class="ai-preview-subtitle" id="aiPreviewSubtitle"></div>
+          <button class="btn btn-primary" id="applyAiBtn" style="width:100%; margin-top:10px;">Apply to this template</button>
+        </div>
+        <p class="export-status" id="aiStatus" style="margin-top:6px;"></p>
+
+        <h4 style="margin-top: 22px;">Content</h4>
+        <div class="field-group">
+          <label for="titleInput">Title</label>
+          <textarea id="titleInput" rows="2"></textarea>
+        </div>
+        <div class="field-group">
+          <label for="subtitleInput">Subtitle</label>
+          <textarea id="subtitleInput" rows="2"></textarea>
+        </div>
+        <div class="field-group">
+          <label for="handleInput">Handle / footer text</label>
+          <input type="text" id="handleInput" />
+        </div>
+
+        <div class="field-group" id="kickerFieldGroup" style="display:none;">
+          <label for="kickerInput">Background text</label>
+          <input type="text" id="kickerInput" />
+        </div>
+
+        <div class="field-group" id="imageFieldGroup" style="display:none;">
+          <label>Image</label>
+          <div class="upload-drop" id="imageDrop">
+            Click or drag a photo here
+            <input type="file" id="imageInput" accept="image/*" />
+          </div>
+          <div id="imageAdjustGroup" style="display:none; margin-top:10px;">
+            <label for="imageZoomInput">Zoom</label>
+            <input type="range" id="imageZoomInput" min="1" max="3" step="0.01" value="1" />
+            <p class="hint-text">Drag the photo on the canvas to reposition it.</p>
+            <button class="btn" id="resetImageBtn" style="width:100%; margin-top:8px;">Reset position</button>
+          </div>
+        </div>
+
+        <h4 style="margin-top: 22px;">Layout</h4>
+        <div class="field-group">
+          <p class="hint-text" style="margin:0 0 8px;">Drag anywhere on the canvas that isn't a photo to move the title/subtitle/handle together.</p>
+          <button class="btn" id="resetTextPosBtn" style="width:100%;">Reset text position</button>
+        </div>
+        <div class="field-group">
+          <label>Extra photos <span class="hint-text-inline">(add as many as you like)</span></label>
+          <div class="upload-drop" id="extraImageDrop">
+            Click or drag photos here
+            <input type="file" id="extraImageInput" accept="image/*" multiple />
+          </div>
+          <p class="hint-text">Drag a photo on the canvas to move it, or use the size slider below. New photos land in the center.</p>
+          <div id="imageLayerList" class="layer-list"></div>
+        </div>
+
+        <h4 style="margin-top: 22px;">Elements</h4>
+        <div class="field-group">
+          <p class="hint-text" style="margin:0 0 8px;">Add music-player widgets, stickers, tags, and doodles on top of the template. Drag one on the canvas to move it; use its controls below to recolor, resize, rotate, or edit its text.</p>
+          <div id="elementCatalog"></div>
+          <div id="elementList" class="layer-list"></div>
+        </div>
+
+        <h4 style="margin-top: 22px;">Colors</h4>
+        <div class="field-group">
+          <div class="color-row">
+            <label class="color-field">
+              <input type="color" id="bgColorInput" />
+              <span>Background</span>
+            </label>
+            <label class="color-field">
+              <input type="color" id="accentColorInput" />
+              <span>Accent</span>
+            </label>
+          </div>
+        </div>
+        <div class="field-group" id="subtitleColorFieldGroup" style="display:none;">
+          <div class="color-row">
+            <label class="color-field">
+              <input type="color" id="subtitleColorInput" />
+              <span>Subtitle</span>
+            </label>
+          </div>
+        </div>
+
+        <h4 style="margin-top: 22px;">Export</h4>
+        <div class="field-group">
+          <label for="textAnimSelect">Text animation</label>
+          <select id="textAnimSelect">
+            <option value="default" selected>Default (per-template)</option>
+            <option value="typewriter">Typewriter</option>
+          </select>
+        </div>
+        <div class="field-group">
+          <label for="durationSelect">Animation duration</label>
+          <select id="durationSelect">
+            <option value="2">Fast · 2s</option>
+            <option value="3.2" selected>Default · 3.2s</option>
+            <option value="5">Slow · 5s</option>
+            <option value="8">Extra slow · 8s</option>
+          </select>
+        </div>
+        <div class="field-group">
+          <button class="btn" id="previewAnimBtn" style="width:100%;">▶ Preview animation</button>
+        </div>
+        <div class="export-actions">
+          <button class="btn" id="downloadPngBtn">Download PNG</button>
+          <button class="btn btn-primary" id="downloadMp4Btn">Download MP4</button>
+        </div>
+        <div class="progress-bar" id="progressBar">
+          <div class="progress-bar-fill" id="progressBarFill"></div>
+        </div>
+        <div class="export-status" id="exportStatus"></div>
+      </aside>
+    </div>
+  </div>
+
+  <script src="assets/js/templates-data.js"></script>
+  <script src="assets/js/renderer.js"></script>
+  <script src="assets/js/elements-data.js"></script>
+  <script src="assets/js/elements-renderer.js"></script>
+  <script src="assets/js/elements-ui.js"></script>
+  <script src="assets/js/export-png.js"></script>
+  <script src="assets/js/export-video.js"></script>
+  <script src="assets/js/editor.js"></script>
+</body>
+</html>
