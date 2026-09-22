@@ -159,18 +159,6 @@ different (a timed lyric sequence + audio, not a fixed title/subtitle).
   the same ffmpeg.wasm webm→mp4 transcode as the template editor's export
   when the browser can't record `video/mp4` directly.
 
-## AI content generation (optional, Groq)
-
-The editor's "Generate with AI" panel calls the Groq API directly from the
-browser to draft a title/subtitle/background-text set from a short prompt,
-styled to match the `love.notezunfiltered` tone. Since this is a static site
-with no backend, it's bring-your-own-key: paste a Groq API key (from
-[console.groq.com/keys](https://console.groq.com/keys)) into the panel — it's
-stored only in `localStorage` and sent directly to `api.groq.com`, never
-through any server this project runs. Generated content can be applied to
-whichever template you're currently editing, and re-applied after switching
-templates to try the same content across different looks.
-
 ## How export works
 
 - **PNG** — the current template is re-rendered at full resolution to an

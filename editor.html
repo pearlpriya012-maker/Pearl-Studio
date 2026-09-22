@@ -40,32 +40,7 @@
       </main>
 
       <aside class="panel panel-right">
-        <h4>Generate with AI</h4>
-        <div class="field-group">
-          <label for="groqKeyInput">Groq API key</label>
-          <input type="password" id="groqKeyInput" placeholder="gsk_..." autocomplete="off" />
-          <p class="hint-text">Stored only in your browser's local storage and sent directly to Groq — never through any server we run. Get a free key at <a href="https://console.groq.com/keys" target="_blank" rel="noopener">console.groq.com/keys</a>.</p>
-        </div>
-        <div class="field-group">
-          <label for="groqModelInput">Model <span class="hint-text-inline">(optional)</span></label>
-          <input type="text" id="groqModelInput" placeholder="llama-3.1-8b-instant" />
-          <p class="hint-text">Groq retires/renames model IDs periodically. If generation fails with a "model does not exist" error, check the current list at <a href="https://console.groq.com/docs/models" target="_blank" rel="noopener">console.groq.com/docs/models</a> and paste a valid one here.</p>
-        </div>
-        <div class="field-group">
-          <label for="aiPromptInput">Describe what you want</label>
-          <textarea id="aiPromptInput" rows="2" placeholder="e.g. missing someone from a k-drama binge at 2am"></textarea>
-        </div>
-        <div class="field-group">
-          <button class="btn" id="generateAiBtn" style="width:100%;">✨ Generate content</button>
-        </div>
-        <div class="ai-preview" id="aiPreview" style="display:none;">
-          <div class="ai-preview-title" id="aiPreviewTitle"></div>
-          <div class="ai-preview-subtitle" id="aiPreviewSubtitle"></div>
-          <button class="btn btn-primary" id="applyAiBtn" style="width:100%; margin-top:10px;">Apply to this template</button>
-        </div>
-        <p class="export-status" id="aiStatus" style="margin-top:6px;"></p>
-
-        <h4 style="margin-top: 22px;">Content</h4>
+        <h4>Content</h4>
         <div class="field-group">
           <label for="titleInput">Title</label>
           <textarea id="titleInput" rows="2"></textarea>
